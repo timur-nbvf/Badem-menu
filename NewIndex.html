@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Меню еды</title>
+  <style>
+    body {
+      background-color: #2d2535;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: black;
+      padding: 20px;
+      width: 430px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .category {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .item img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 100px;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 5px;
+    }
+    .btn {
+      background: white;
+      color: black;
+      font-size: 18px;
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+    }
+    .send-btn {
+      margin-top: 30px;
+      background: green;
+      color: white;
+      font-size: 18px;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="category">Первое блюдо</div>
+
+    <div class="item" data-name="Фрикадельковый суп" data-price="25000">
+      <img src="placeholder1.jpg" alt="суп">
+      <div>Фрикадельковый суп<br>25 000</div>
+      <div class="controls">
+        <button class="btn minus">-</button>
+        <span class="count">0</span>
+        <button class="btn plus">+</button>
+      </div>
+    </div>
+
+    <div class="item" data-name="Куриный суп" data-price="25000">
+      <img src="placeholder2.jpg" alt="суп">
+      <div>Куриный суп с лапшой<br>25 000</div>
+      <div class="controls">
+        <button class="btn minus">-</button>
+        <span class="count">0</span>
+        <button class="btn plus">+</button>
+      </div>
+    </div>
+
+    <div class="item" data-name="Окрошка" data-price="25000">
+      <img src="placeholder3.jpg" alt="окрошка">
+      <div>Окрошка<br>25 000</div>
+      <div class="controls">
+        <button class="btn minus">-</button>
+        <span class="count">0</span>
+        <button class="btn plus">+</button>
+      </div>
+    </div>
+
+    <div class="category">Второе блюдо</div>
+
+    <div class="item" data-name="Курица с грибами" data-price="30000">
+      <img src="placeholder4.jpg" alt="курица">
+      <div>Курица с грибами в сливочном соусе<br>30 000</div>
+      <div class="controls">
+        <button class="btn minus">-</button>
+        <span class="count">0</span>
+        <button class="btn plus">+</button>
+      </div>
+    </div>
+
+    <div class="item" data-name="Бифштекс" data-price="30000">
+      <img src="placeholder5.jpg" alt="бифштекс">
+      <div>Бифштекс<br>30 000</div>
+      <div class="controls">
+        <button class="btn minus">-</button>
+        <span class="count">0</span>
+        <button class="btn plus">+</button>
+      </div>
+    </div>
+
+    <button class="send-btn">Отправить заказ</button>
+  </div>
+
+  <script>
+    const items = document.querySelectorAll('.item');
+    items.forEach(item => {
+      const plus = item.querySelector('.plus');
+      const minus = item.querySelector('.minus');
+      const count = item.querySelector('.count');
+
+      plus.addEventListener('click', () => {
+        count.textContent = +count.textContent + 1;
+      });
+
+      minus.addEventListener('click', () => {
+        if (+count.textContent > 0)
+          count.textContent = +count.textContent - 1;
+      });
+    });
+
+    document.querySelector('.send-btn').addEventListener('click', () => {
+      const order = [];
+      items.forEach(item => {
+        const name = item.dataset.name;
+        const price = item.dataset.price;
+        const count = item.querySelector('.count').textContent;
+        if (+count > 0) {
+          order.push(`${name} x${count} (${price})`);
+        }
+      });
+
+      fetch('http://localhost:8000/send-order', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ order })
+      })
+      .then(res => alert('Заказ отправлен!'))
+      .catch(err => alert('Ошибка отправки'));
+    });
+  </script>
+</body>
+</html>
