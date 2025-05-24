@@ -67,7 +67,7 @@
     <div class="category">Первое блюдо</div>
 
     <div class="item" data-name="Фрикадельковый суп" data-price="25000">
-      <img src="placeholder1.jpg" alt="суп">
+      <img src="img/суп с фрикадельками.png" alt="суп">
       <div>Фрикадельковый суп<br>25 000</div>
       <div class="controls">
         <button class="btn minus">-</button>
@@ -77,7 +77,7 @@
     </div>
 
     <div class="item" data-name="Куриный суп" data-price="25000">
-      <img src="placeholder2.jpg" alt="суп">
+      <img src="img/Суп.png" alt="суп">
       <div>Куриный суп с лапшой<br>25 000</div>
       <div class="controls">
         <button class="btn minus">-</button>
@@ -87,7 +87,7 @@
     </div>
 
     <div class="item" data-name="Окрошка" data-price="25000">
-      <img src="placeholder3.jpg" alt="окрошка">
+      <img src="img/Окршока.png" alt="окрошка">
       <div>Окрошка<br>25 000</div>
       <div class="controls">
         <button class="btn minus">-</button>
@@ -99,7 +99,7 @@
     <div class="category">Второе блюдо</div>
 
     <div class="item" data-name="Курица с грибами" data-price="30000">
-      <img src="placeholder4.jpg" alt="курица">
+      <img src="img/Курица в сливкаах.png" alt="курица">
       <div>Курица с грибами в сливочном соусе<br>30 000</div>
       <div class="controls">
         <button class="btn minus">-</button>
@@ -109,7 +109,7 @@
     </div>
 
     <div class="item" data-name="Бифштекс" data-price="30000">
-      <img src="placeholder5.jpg" alt="бифштекс">
+      <img src="img/Бифштекси.png" alt="бифштекс">
       <div>Бифштекс<br>30 000</div>
       <div class="controls">
         <button class="btn minus">-</button>
@@ -149,13 +149,13 @@
         }
       });
 
-      fetch('https://timur-nbvf.github.io/Badem-menu/NewIndex.html', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ order })
-      })
-      .then(res => alert('Заказ отправлен!'))
-      .catch(err => alert('Ошибка отправки'));
+      fetch('http://localhost:8000/send-order', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({ order })
+})
+
+
     });
   </script>
 </body>
